@@ -1,0 +1,119 @@
+﻿@model Test_FathinMuhammadFadhlullah.Entities.UserGroup
+@{
+    var lsPer = Model.ListPermission;
+    ViewBag.Title = "SettingForm";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+@section page_title{
+    UserGroup Permission}
+
+@section css{
+    <!-- BEGIN VIEW LEVEL CSS -->
+    <!-- END VIEW LEVEL CSS -->
+}
+
+
+@section Scripts{
+    <!-- BEGIN VIEW LEVEL SCRIPTS -->
+    <!-- END VIEW LEVEL SCRIPTS -->
+}
+
+<div class="page-title"></div>
+<div class="row">
+    <div class="col-md-12">
+        @await Html.PartialAsync("_StatusMessage")
+        @using (Html.BeginForm("Permission", "usergroup", FormMethod.Post, new { @class = "form-horizontal" }))
+        {
+            @Html.AntiForgeryToken()
+            <div class="portlet box grey">
+                <div class="portlet-title">
+                    <div class="caption"><i class="fa fa-cogs"></i> Usergroup Permission</div>
+                </div>
+                <div class="portlet-body form">
+                    <div class="form-body">
+                        <div class="row">
+                            <div class="col-md-12">
+                                <div class="form-group">
+                                    <label class="col-md-3 control-label">User Group</label>
+                                    <div class="col-md-9">
+                                        @Html.TextBoxFor(model => Model.usergroup_name, new { id = "usergroup_name", @class = "form-control input-large", @readonly = true })
+                                        @Html.HiddenFor(model => Model.usergroup_id)
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="portlet light portlet-fit bordered">
+                            <div class="portlet-title">
+                                <div class="caption">
+                                    <i class="icon-settings font-dark-grey"></i>
+                                    <span class="caption-subject font-dark-grey sbold uppercase">Permission</span>
+                                </div>
+                            </div>
+                            <div class="portlet-body">
+                                <table class="table table-bordered table-striped table-hover table-advance" id="tblPermission">
+                                    <thead>
+                                        <tr>
+                                            <th><i class="fa fa-bookmark-o"></i> Nama Menu</th>
+                                            <th><i class="fa fa-plus"></i> <input type="checkbox" value="1" class="group-checkable" data-set="#tblPermission .groupCreate" /> Create</th>
+                                            <th><i class="fa fa-edit"></i> <input type="checkbox" value="1" class="group-checkable" data-set="#tblPermission .groupEdit" /> Edit</th>
+                                            <th><i class="fa fa-trash-o"></i> <input type="checkbox" value="1" class="group-checkable" data-set="#tblPermission .groupDelete" /> Delete</th>
+                                            <th><i class="fa fa-eye"></i> <input type="checkbox" value="1" class="group-checkable" data-set="#tblPermission .groupView" /> View</th>
+                                            <th><input type="checkbox" value="1" class="group-checkable" data-set="#tblPermission .groupAll" /> Check All</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        @{
+                                            var ls = ViewBag.lsNav;
+                                            for (int i = 0; i < ls.Count; i++)
+                                            {
+                                                string sTabs = String.Join("", Enumerable.Repeat("----", ls[i].level - 1)) + " " + ls[i].title;
+                                                string elName = "groupCheck" + ls[i].menu_id;
+                                                string createChk = (lsPer.Where(x => x.menu_id == ls[i].menu_id && x.create_perm == 1).Count() > 0) ? "checked" : "";
+                                                string viewChk = (lsPer.Where(x => x.menu_id == ls[i].menu_id && x.view_perm == 1).Count() > 0) ? "checked" : "";
+                                                string editChk = (lsPer.Where(x => x.menu_id == ls[i].menu_id && x.edit_perm == 1).Count() > 0) ? "checked" : "";
+                                                string deleteChk = (lsPer.Where(x => x.menu_id == ls[i].menu_id && x.delete_perm == 1).Count() > 0) ? "checked" : "";
+                                                <tr>
+                                                    <td class="highlight">
+                                                        @{
+                                                            if ((ls[i].pid == 0))
+                                                            {
+                                                                <div class="success"></div>@Html.Raw("&nbsp;&nbsp;&nbsp;")<strong>@ls[i].title</strong>
+                                                            }
+                                                            else
+                                                            {
+                                                                @Html.Raw(sTabs);
+                                                            }
+                                                        }
+                                                    </td>
+                                                    <td><i class="fa fa-plus"></i> <input type="checkbox" value="1" name="permission[@i].create" @createChk class="@elName groupCreate groupAll" /></td>
+                                                    <td><i class="fa fa-edit"></i> <input type="checkbox" value="1" name="permission[@i].edit" @editChk class="@elName groupEdit groupAll" /></td>
+                                                    <td><i class="fa fa-trash-o"></i> <input type="checkbox" value="1" name="permission[@i].delete" @deleteChk class="@elName groupDelete groupAll" /></td>
+                                                    <td><i class="fa fa-eye"></i> <input type="checkbox" value="1" name="permission[@i].view" @viewChk class="@elName groupView groupAll" /></td>
+                                                    <td style="background: #DDD; text-align: center;">
+                                                        <input type="checkbox" value="1" class="group-checkable" data-set="#tblPermission .@elName" />
+                                                        <input type="hidden" name="permission[@i].ugID" value="@Model.usergroup_id" />
+                                                        <input type="hidden" name="permission[@i].menu_id" value="@ls[i].menu_id" />
+                                                    </td>
+                                                </tr>
+                                            }
+                                        }
+                                    </tbody>
+                                </table>
+
+                            </div>
+                        </div>
+
+                        <div class="row" style="margin-top:10px;">
+                            <div class="col-md-6">
+                                <button class="btn grey-salsa" id="savefrmPermission" type="submit"><i class="fa fa-check icon-white"></i> Save</button>
+                                <a class="btn btn-default" onclick="window.history.back();"><i class="fa fa-reply icon-white"></i> Back</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        }
+    </div>
+</div>

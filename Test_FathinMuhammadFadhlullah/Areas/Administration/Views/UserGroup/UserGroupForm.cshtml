@@ -1,0 +1,62 @@
+﻿@model Test_FathinMuhammadFadhlullah.Entities.UserGroup
+@{
+    ViewBag.Title = "UserGroupForm";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+@section page_title{
+    User Group Form}
+
+@section css{
+    <!-- BEGIN VIEW LEVEL CSS -->
+    <!-- END VIEW LEVEL CSS -->
+}
+
+
+@section Scripts{
+    <!-- BEGIN VIEW LEVEL SCRIPTS -->
+    <!-- END VIEW LEVEL SCRIPTS -->
+}
+
+<div class="page-title"></div>
+<div class="row">
+    <div class="col-md-12">
+        @Html.Partial("_StatusMessage")
+        @using (Html.BeginForm((Model.usergroup_id <= 0) ? "Add" : "Edit", "UserGroup", FormMethod.Post, new { @class = "form-horizontal" }))
+        {
+            @Html.AntiForgeryToken()
+            <div class="portlet light bordered">
+                <div class="portlet-title">
+                    <div class="caption"><i class="fa fa-cogs"></i> UserGroup</div>
+                    <div class="actions">
+                        <a name="TransInfo" id="TransInfo" class="btn btn-circle btn-icon-only btn-default" onclick="transInfo('USRG', @Model.usergroup_id);" href="#myModalTransInfo" data-toggle="modal" data-backdrop="static"><i class="fa fa-info-circle"></i></a>
+                    </div>
+                </div>
+                <div class="portlet-body form">
+                    <div class="form-body">
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label class="col-md-4 control-label">User Group Name</label>
+                                    <div class="col-md-8">
+                                        @Html.TextBoxFor(model => Model.usergroup_name, new { id = "usergroup_name", @class = "form-control input-medium", placeholder = "Usergroup Name", @required = true })
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="form-actions">
+                        <div class="row">
+                            <div class="col-md-6">
+                                @Html.Hidden("usergroup_id", Model.usergroup_id)
+                                <button class="btn grey-salsa" id="saveFrm" type="submit"><i class="fa fa-check icon-white"></i> Save</button>
+                                <a class="btn default" href="@Url.Action("Index", "usergroup")"><i class="fa fa-reply icon-white"></i> Back</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        }
+    </div>
+</div>

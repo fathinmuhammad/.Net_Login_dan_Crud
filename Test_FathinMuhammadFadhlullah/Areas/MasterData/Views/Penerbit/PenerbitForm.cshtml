@@ -1,0 +1,68 @@
+﻿@model Test_FathinMuhammadFadhlullah.Entities.Penerbit
+@{
+    ViewBag.Title = "PenerbitForm";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+@section page_title{
+   Form Data Penerbit}
+
+@section css{
+    <!-- BEGIN VIEW LEVEL CSS -->
+    <!-- END VIEW LEVEL CSS -->
+}
+
+
+@section Scripts{
+    <!-- BEGIN VIEW LEVEL SCRIPTS -->
+    <!-- END VIEW LEVEL SCRIPTS -->
+}
+
+<div class="page-title"></div>
+<div class="row">
+    <div class="col-md-12">
+        @await Html.PartialAsync("_StatusMessage")
+        @using (Html.BeginForm((Model.penerbit_id <= 0) ? "Add" : "Edit", "Penerbit", FormMethod.Post, new { @class = "form-horizontal" }))
+        {
+            @Html.AntiForgeryToken()
+            <div class="portlet light bordered">
+                <div class="portlet-title">
+                    <div class="caption"><i class="fa fa-cogs"></i> Penerbit</div>
+                    <div class="actions">
+                        <a name="TransInfo" id="TransInfo" class="btn btn-circle btn-icon-only btn-default" onclick="transInfo('PRT', @Model.penerbit_id);" href="#myModalTransInfo" data-toggle="modal" data-backdrop="static"><i class="fa fa-info-circle"></i></a>
+                    </div>
+                </div>
+                <div class="portlet-body form">
+                    <div class="form-body">
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label class="col-md-4 control-label">Nama (*)</label>
+                                    <div class="col-md-8">
+                                        @Html.TextBoxFor(model => Model.nama, new { id = "nama", @class = "form-control input-large", placeholder = "Nama", @required = true })
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label class="col-md-4 control-label">Alamat (*)</label>
+                                    <div class="col-md-8">
+                                        @Html.TextAreaFor(model => Model.alamat, new { cols = 35, @rows = 3, @required = true })
+                                        @*@Html.TextBoxFor(model => Model.alamat, new { id = "alamat", @class = "form-control input-large", placeholder = "Alamat", @required = true })*@
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="form-actions">
+                    <div class="row">
+                        <div class="col-md-6">
+                            @Html.Hidden("penerbit_id", Model.penerbit_id)
+                            <button class="btn blue" id="saveFrm" type="submit" onclick="return confirm('are you sure ?')"><i class="fa fa-check icon-white"></i> Save</button>
+                            <a class="btn default" href="@Url.Action("Index", "Penerbit")"><i class="fa fa-reply icon-white"></i> Back</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        }
+    </div>
+</div>

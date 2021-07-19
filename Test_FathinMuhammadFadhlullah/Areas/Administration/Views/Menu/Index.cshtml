@@ -1,0 +1,75 @@
+﻿@model List<Test_FathinMuhammadFadhlullah.Entities.Menu>
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+
+@section page_title{
+    Menu Master Data}
+
+@section css{
+    <!-- BEGIN VIEW LEVEL CSS -->
+    <!-- END VIEW LEVEL CSS -->
+}
+
+
+@section Scripts{
+    <!-- BEGIN VIEW LEVEL SCRIPTS -->
+    <!-- END VIEW LEVEL SCRIPTS -->
+}
+
+<div class="page-title"></div>
+<div class="row">
+    <div class="col-md-12">
+        @await Html.PartialAsync("_StatusMessage")
+        <div class="portlet light ">
+            <div class="portlet-title">
+                <div class="caption font-dark">
+                    <i class="icon-settings font-dark"></i>
+                    <span class="caption-subject bold uppercase"> Menu</span>
+                </div>
+                <div class="actions">
+                    <div class="btn-group btn-group-devided">
+                        <a href="@Url.Action("Add","Menu")" class="btn btn-circle btn-sm sbold red">
+                            <i class="fa fa-plus"> </i>Add New
+                        </a>
+                    </div>
+                </div>
+            </div>
+            <div class="portlet-body">
+                <table class="table table-striped table-bordered table-hover" id="datatables">
+                    <thead>
+                        <tr role="row">
+                            <th>Menu Name</th>
+                            <th>Title</th>
+                            <th>URL</th>
+                            <th>Icon</th>
+                            <th>Sort Order</th>
+                            <th>Action</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @{
+                            for (int i = 0; i < Model.Count; i++)
+                            {
+                                <tr>
+                                    <td>@Model[i].menu_name</td>
+                                    <td>@Model[i].menu_title</td>
+                                    <td>@Model[i].menu_url</td>
+                                    <td>@Model[i].menu_icon</td>
+                                    <td>@Model[i].menu_position</td>
+                                    <td>
+                                        <a href="@Url.Action("Edit","Menu", new { code = Model[i].menu_id })" class="icon huge" title="Details Menu"><i class="fa fa-pencil"></i></a>&nbsp;
+                                        <a href="@Url.Action("Delete","Menu", new { code = Model[i].menu_id })" class="icon huge" title="Delete Menu" onclick="return confirm('are you sure ?')"><i class="fa fa-trash-o"></i></a>
+                                    </td>
+                                </tr>
+                            }
+                        }
+                    </tbody>
+                </table>
+            </div>
+        </div>
+        <!-- END EXAMPLE TABLE PORTLET-->
+    </div>
+</div>

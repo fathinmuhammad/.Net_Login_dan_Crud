@@ -1,0 +1,24 @@
+﻿/***
+custom table font size
+***/
+.customtbl td, .customtbl th {
+    font-size: 12px !important; 
+}
+.customtbl td.customfontsize, .customtbl th.customfontsize {
+    font-size: 12px !important; 
+}
+
+.optbdu {
+	padding: 2px;
+	background-color: #ffffff;
+	border: 1px solid #e5e5e5;
+	box-shadow: none;
+	color: #333333; 
+	transition: border-color 0.15s ease-in-out 0s, box-shadow 0.15s ease-in-out 0s; 
+	text-shadow: 0 1px 0 rgba(255, 255, 255, 0.5); 
+    /*width: 100px;*/
+} 
+.optbdu[disabled], .optbdu[readonly], fieldset[disabled] .optbdu{
+    background-color: #eef1f5;
+    opacity: 1;
+}

@@ -1,0 +1,39 @@
+﻿
+@{
+                /**/
+
+                ViewBag.Title = "Index";
+                Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+@section page_title{
+}
+
+@section css{
+    <!-- BEGIN VIEW LEVEL CSS -->
+    <!-- END VIEW LEVEL CSS -->
+}
+
+
+@section Scripts{
+    <!-- BEGIN VIEW LEVEL SCRIPTS -->
+    <!-- END VIEW LEVEL SCRIPTS -->
+}
+
+<div class="row">
+    <div class="col-md-12 page-500">
+        <div class=" number font-red"><i class="fa fa-minus-circle"></i></div>
+        <div class=" details">
+            <h3>Forbidden</h3>
+            <p>
+                You do not have the right to access this page.
+            </p>
+            <p>
+                <a class="btn red btn-outline" href="@Url.Action("Index", "home" )"><i class="fa fa-reply icon-white"></i> Home</a>
+                <br>
+            </p>
+        </div>
+    </div>
+</div>
+
+

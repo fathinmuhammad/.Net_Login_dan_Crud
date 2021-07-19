@@ -1,0 +1,80 @@
+﻿@model Test_FathinMuhammadFadhlullah.Entities.Buku
+@{
+    ViewBag.Title = "BukuForm";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+@section page_title{
+    Form Data Buku}
+
+@section css{
+    <!-- BEGIN VIEW LEVEL CSS -->
+    <!-- END VIEW LEVEL CSS -->
+}
+
+
+@section Scripts{
+    <!-- BEGIN VIEW LEVEL SCRIPTS -->
+    <!-- END VIEW LEVEL SCRIPTS -->
+}
+
+<div class="page-title"></div>
+<div class="row">
+    <div class="col-md-12">
+        @await Html.PartialAsync("_StatusMessage")
+        @using (Html.BeginForm((Model.buku_id <= 0) ? "Add" : "Edit", "Buku", FormMethod.Post, new { @class = "form-horizontal" }))
+        {
+            @Html.AntiForgeryToken()
+            <div class="portlet light bordered">
+                <div class="portlet-title">
+                    <div class="caption"><i class="fa fa-cogs"></i> Buku</div>
+                    <div class="actions">
+                        <a name="TransInfo" id="TransInfo" class="btn btn-circle btn-icon-only btn-default" onclick="transInfo('BKU', @Model.buku_id);" href="#myModalTransInfo" data-toggle="modal" data-backdrop="static"><i class="fa fa-info-circle"></i></a>
+                    </div>
+                </div>
+                <div class="portlet-body form">
+                    <div class="form-body">
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label class="col-md-4 control-label">Judul (*)</label>
+                                    <div class="col-md-8">
+                                        @Html.TextBoxFor(model => Model.judul, new { id = "judul", @class = "form-control input-large", placeholder = "Judul Buku", @required = true })
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label class="col-md-4 control-label">Penerbit (*)</label>
+                                    <div class="col-md-8">
+                                        @Html.DropDownListFor(model => Model.penerbit_id, new SelectList(ViewBag.listPenerbit, "penerbit_id", "nama", ViewBag.listPenerbit), "", new { id = "penerbit_id", @class = "form-control input-large select2", @data_tags = "true", @data_placeholder = "Pilih Penerbit", @data_allow_clear = "true" })
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label class="col-md-4 control-label">Date Purchase Contract *</label>
+                                    <div class="col-md-8">
+                                        <div class="col-md-6 input-group date date-picker" data-date-format="dd-mm-yyyy">
+                                            @Html.TextBoxFor(model => Model.tanggal_terbit, new { @Value = Model.tanggal_terbit.ToString("dd-MM-yyyy"), @class = "form-control form-filter", placeholder = "To", @required = true })
+                                            <span class="input-group-btn">
+                                                <button class="btn btn-small default" type="button">
+                                                    <i class="fa fa-calendar"></i>
+                                                </button>
+                                            </span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="form-actions">
+                    <div class="row">
+                        <div class="col-md-6">
+                            @Html.Hidden("buku_id", Model.buku_id)
+                            <button class="btn blue" id="saveFrm" type="submit" onclick="return confirm('are you sure ?')"><i class="fa fa-check icon-white"></i> Save</button>
+                            <a class="btn default" href="@Url.Action("Index", "Buku")"><i class="fa fa-reply icon-white"></i> Back</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        }
+    </div>
+</div>

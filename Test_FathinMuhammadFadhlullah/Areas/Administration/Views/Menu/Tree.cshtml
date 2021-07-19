@@ -1,0 +1,56 @@
+﻿@model String
+@using Test_FathinMuhammadFadhlullah.Entities
+@{
+                /**/
+
+                ViewBag.Title = "Tree";
+                Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+
+@section page_title{
+    Menu Tree}
+@section css{
+}
+@section Scripts{
+}
+
+@{
+
+}
+
+<div class="page-title"></div>
+<div class="row">
+    <div class="col-md-12">
+
+        @await Html.PartialAsync("_StatusMessage")
+        @using (Html.BeginForm("SaveTree", "Menu", FormMethod.Post, new { @class = "form-horizontal", @name = "frmMenuTree" }))
+        {
+            @Html.AntiForgeryToken()
+            <textarea id="nestable_list_1_output" name="nestable_list_1_output" class="form-control col-md-12 margin-bottom-10;" style="display:none;"></textarea>
+            <div class="portlet light ">
+                <div class="portlet-title">
+                    <div class="caption">
+                        <i class="fa fa-comments"></i>Structures
+                    </div>
+                    <div class="tools">
+                        <a class="collapse" href="javascript:;"></a>
+                        <a class="config" data-toggle="modal" href="#portlet-config"></a>
+                        <a class="reload" href="javascript:;"></a>
+                        <a class="remove" href="javascript:;"></a>
+                    </div>
+                </div>
+                <div class="portlet-body">
+                    <div id="nestable_list_1" class="dd">
+                        <ol class="dd-list">
+                            @Html.Raw(TempData["nested_menu_tree"])
+                        </ol>
+                    </div>
+                </div>
+            </div>
+            <button id="btnSave" type="submit" class="btn blue-dark">Save Changes</button>
+            <a class="btn default" href="@Url.Action("Index", "menu")"><i class="fa fa-reply icon-white"></i> Back</a>
+        }
+    </div>
+</div>
+

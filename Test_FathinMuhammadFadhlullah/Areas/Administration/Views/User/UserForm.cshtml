@@ -1,0 +1,86 @@
+﻿@model Test_FathinMuhammadFadhlullah.Entities.User
+@{
+    ViewBag.Title = "SettingForm";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+@section page_title{
+    User Master Data Form}
+
+@section css{
+    <!-- BEGIN VIEW LEVEL CSS -->
+    <!-- END VIEW LEVEL CSS -->
+}
+
+
+@section Scripts{
+    <!-- BEGIN VIEW LEVEL SCRIPTS -->
+    <!-- END VIEW LEVEL SCRIPTS -->
+}
+
+<div class="page-title"></div>
+<div class="row">
+    <div class="col-md-12">
+        @await Html.PartialAsync("_StatusMessage")
+        @using (Html.BeginForm((Model.user_id <= 0) ? "Add" : "Edit", "User", FormMethod.Post, new { @class = "form-horizontal" }))
+        {
+            @Html.AntiForgeryToken()
+            <div class="portlet light bordered">
+                <div class="portlet-title">
+                    <div class="caption"><i class="fa fa-cogs"></i> User</div>
+                    <div class="actions">
+                        <a name="TransInfo" id="TransInfo" class="btn btn-circle btn-icon-only btn-default" onclick="transInfo('USR', @Model.user_id);" href="#myModalTransInfo" data-toggle="modal" data-backdrop="static"><i class="fa fa-info-circle"></i></a>
+                    </div>
+                </div>
+                <div class="portlet-body form">
+                    <div class="form-body">
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label class="col-md-4 control-label">Username (*)</label>
+                                    <div class="col-md-8">
+                                        @Html.TextBoxFor(model => Model.username,
+          Model.user_id <= 0 ? (object)new { id = "username", @class = "form-control input-medium", placeholder = "Username", @required = true } : (object)new { id = "username", @class = "form-control input-medium", placeholder = "Username", @required = true, @readonly = true })
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label class="col-md-4 control-label">Fullname</label>
+                                    <div class="col-md-8">
+                                        @Html.TextBoxFor(model => Model.fullname, new { id = "fullname", @class = "form-control input-large", placeholder = "Fullname", @required = true })
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label class="col-md-4 control-label">Usergroup (*)</label>
+                                    <div class="col-md-8">
+                                        @Html.DropDownListFor(model => model.usergroup_id, new SelectList(ViewBag.listUserGroup, "usergroup_id", "usergroup_name"), "", new { id = "usergroup_id", @class = "form-control input-medium" })
+                                    </div>
+                                </div>
+                                <div class="form-group form-inline">
+                                    <label class="col-md-4 control-label">Password (*)</label>
+                                    <div class="col-md-8">
+                                        @Html.PasswordFor(model => Model.password, new { id = "password", @class = "form-control input-medium", placeholder = "Password", Value = "" }) (Min. 4 Character)
+                                    </div>
+                                </div>
+                                <div class="form-group form-inline">
+                                    <label class="col-md-4 control-label">Re-Type Password (*)</label>
+                                    <div class="col-md-8">
+                                        @Html.PasswordFor(model => Model.password, new { id = "re_password", @class = "form-control input-medium", placeholder = "Re-Type Password", Value = "" }) (Min. 4 Character)
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="form-actions">
+                    <div class="row">
+                        <div class="col-md-6">
+                            @Html.Hidden("user_id", Model.user_id)
+                            <button class="btn blue" id="saveFrm" type="submit" onclick="return confirm('are you sure ?')"><i class="fa fa-check icon-white"></i> Save</button>
+                            <a class="btn default" href="@Url.Action("Index", "user")"><i class="fa fa-reply icon-white"></i> Back</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        }
+    </div>
+</div>

@@ -1,0 +1,98 @@
+﻿@model List<Test_FathinMuhammadFadhlullah.Entities.Penerbit>
+
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+@section page_title{
+    Penerbit Data}
+
+@section css{
+    <!-- BEGIN VIEW LEVEL CSS -->
+    <!-- END VIEW LEVEL CSS -->
+}
+
+
+@section Scripts{
+    <!-- BEGIN VIEW LEVEL SCRIPTS -->
+    <!-- END VIEW LEVEL SCRIPTS -->
+}
+
+<div class="page-title"></div>
+<div class="row">
+    <div class="col-md-12">
+        @await Html.PartialAsync("_StatusMessage")
+        <!-- start filter -->
+        <div class="portlet light bordered">
+            <div class="portlet-title">
+                <div class="caption">
+                    <i class="fa fa-filter font-green"></i>
+                    <span class="caption-subject font-green bold uppercase"> Filter Penerbit</span>
+                </div>
+                <div class="tools"></div>
+            </div>
+            <div class="portlet-body form">
+                <div class="form-horizontal">
+                    <div class="form-body">
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label class="col-md-4 control-label">Nama</label>
+                                    <div class="col-md-8">
+                                        <input type="text" class="form-control input-medium" id="nama" name="nama" value="@(ViewBag.nama ?? String.Empty)">
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label class="col-md-4 control-label">Alamat</label>
+                                    <div class="col-md-8">
+                                        <input type="text" class="form-control input-medium" id="alamat" name="alamat" value="@(ViewBag.alamat ?? String.Empty)">
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-5">
+                                <div class="form-group">
+                                    <label class="col-md-2 control-label"></label>
+                                    <div class="col-md-8">
+                                        <button class="btn btn-primary" id="submitPenerbit" name="submit" value="findDoc"><i class="fa fa-search"></i> Search</button> &nbsp; &nbsp;
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- end of filter -->
+            <div class="portlet light ">
+                <div class="portlet-title">
+                    <div class="caption font-dark">
+                        <i class="icon-settings font-dark"></i>
+                        <span class="caption-subject bold uppercase"> Penerbit</span>
+                    </div>
+                    <div class="actions">
+                        <div class="btn-group btn-group-devided">
+                            <a href="@Url.Action("Add","Penerbit")" class="btn btn-circle btn-sm sbold red">
+                                <i class="fa fa-plus"> </i>Add New
+                            </a>
+                        </div>
+                    </div>
+                </div>
+                <div class="portlet-body">
+                    <table class="table table-striped table-bordered table-hover" data-request-url="@Url.Action("IndexSearch", "Penerbit")" id="dtTables">
+                        <thead>
+                            <tr role="row">
+                                <th>No.</th>
+                                <th>Nama</th>
+                                <th>Alamat</th>
+                                <th>Action</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+            <!-- END EXAMPLE TABLE PORTLET-->
+        </div>
+    </div>

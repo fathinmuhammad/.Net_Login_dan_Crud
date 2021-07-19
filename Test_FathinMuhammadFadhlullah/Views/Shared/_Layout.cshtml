@@ -1,0 +1,193 @@
+﻿@using Microsoft.AspNetCore.Http;
+@using Test_FathinMuhammadFadhlullah.Utils;
+<!DOCTYPE html>
+<!--[if IE 8]> <html lang="en" class="ie8 no-js"> <![endif]-->
+<!--[if IE 9]> <html lang="en" class="ie9 no-js"> <![endif]-->
+<!--[if !IE]><!-->
+<html lang="en">
+<!--<![endif]-->
+<!-- BEGIN HEAD -->
+<head>
+    <meta charset="utf-8" />
+    <title>Test_FathinMuhammadFadhlullah Information System</title>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta content="width=device-width, initial-scale=1" name="viewport" />
+    <meta content="Test_FathinMuhammadFadhlullah, Test_FathinMuhammadFadhlullah, Test_FathinMuhammadFadhlullah Indonesia" name="description" />
+    <meta content="Test_FathinMuhammadFadhlullah Indonesia" name="author" />
+    <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
+    <meta http-equiv="Pragma" content="no-cache">
+    <meta http-equiv="Expires" content="0">
+    <!-- BEGIN GLOBAL MANDATORY STYLES -->
+    <link href="~/assets/modules/css/fonts.googleapis.com_Open_Sans.css" rel="stylesheet" type="text/css" />
+    <link href="~/assets/global/plugins/font-awesome/css/font-awesome.min.css" rel="stylesheet" type="text/css" />
+    <link href="~/assets/global/plugins/simple-line-icons/simple-line-icons.min.css" rel="stylesheet" type="text/css" />
+    <link href="~/assets/global/plugins/bootstrap/css/bootstrap.min.css" rel="stylesheet" type="text/css" />
+    <link href="~/assets/global/plugins/uniform/css/uniform.default.css" rel="stylesheet" type="text/css" />
+    <link href="~/assets/global/plugins/bootstrap-switch/css/bootstrap-switch.min.css" rel="stylesheet" type="text/css" />
+    <!-- END GLOBAL MANDATORY STYLES -->
+    <!-- BEGIN THEME GLOBAL STYLES -->
+    <link href="~/assets/global/css/components-md.min.css" rel="stylesheet" id="style_components" type="text/css" />
+    <link href="~/assets/global/css/plugins-md.min.css" rel="stylesheet" type="text/css" />
+    <!-- END THEME GLOBAL STYLES -->
+    <!-- BEGIN THEME LAYOUT STYLES -->
+    <link href="~/assets/layouts/layout4/css/layout.min.css" rel="stylesheet" type="text/css" />
+    <link href="~/assets/layouts/layout4/css/themes/light.min.css" rel="stylesheet" type="text/css" id="style_color" />
+    <link href="~/assets/layouts/layout4/css/custom.min.css" rel="stylesheet" type="text/css" />
+    <!-- END THEME LAYOUT STYLES -->
+    <!-- BEGIN PAGE LEVEL PLUGINS -->
+    @foreach (String css_ref in (List<String>)TempData["css_controller"])
+    {
+        @(Html.Raw(css_ref + Environment.NewLine))
+    }
+    <!-- END PAGE LEVEL PLUGINS -->
+
+    <link href="~/assets/global/plugins/bootstrap-daterangepicker/daterangepicker.min.css" rel="stylesheet" type="text/css" />
+    <link href="~/assets/global/plugins/bootstrap-datepicker/css/bootstrap-datepicker3.min.css" rel="stylesheet" type="text/css" />
+
+    <link runat="server" rel="shortcut icon" href="~/favicon.ico" />
+    <script src="~/assets/global/plugins/jquery.min.js" type="text/javascript"></script>
+
+    @RenderSection("css", required: true)
+    @RenderSection("scripts", required: true)
+</head>
+<!-- END HEAD -->
+<body class="page-container-bg-solid page-header-fixed page-sidebar-closed-hide-logo page-md">
+    <!-- BEGIN HEADER -->
+    <div style="background-color:#FFFF" class="page-header navbar navbar-fixed-top">
+        <!-- BEGIN HEADER INNER -->
+        <div class="page-header-inner ">
+            <!-- BEGIN LOGO -->
+            <div class="page-logo">
+                <a href="/">
+                    <img width="180px" src="~/images/logo-Test_FathinMuhammadFadhlullah.png" alt="logo" class="logo-default" />
+                </a>
+                <div class="menu-toggler sidebar-toggler">
+                    <!-- DOC: Remove the above "hide" to enable the sidebar toggler button on header -->
+                </div>
+            </div>
+            <!-- END LOGO -->
+            <!-- BEGIN RESPONSIVE MENU TOGGLER -->
+            <a href="javascript:;" class="menu-toggler responsive-toggler" data-toggle="collapse" data-target=".navbar-collapse"> </a>
+            <!-- END RESPONSIVE MENU TOGGLER -->
+            <!-- BEGIN PAGE TOP -->
+            <div class="page-top dt-center">
+                <!-- BEGIN TOP NAVIGATION MENU -->
+                <div class="top-menu">
+                    <ul class="nav navbar-nav pull-right">
+                        <!-- BEGIN USER LOGIN DROPDOWN -->
+                        <li class="separator hide"> </li>
+                        <!-- DOC: Apply "dropdown-dark" class after below "dropdown-extended" to change the dropdown styte -->
+                        <li class="dropdown dropdown-user dropdown-dark">
+                            <a href="javascript:;" class="dropdown-toggle" data-toggle="dropdown" data-hover="dropdown" data-close-others="true">
+                                <span class="username username-hide-on-mobile">
+                                    @AppHttpContext.Current.Session.GetString("fullname")
+                                    @if (!string.IsNullOrEmpty(@AppHttpContext.Current.Session.GetString("company_name")))
+                                    {
+                                        @*<br />
+                                        <small> @AppHttpContext.Current.Session.GetString("company_name") </small>*@
+                                    }
+                                </span>
+                                <img alt="" class="img-circle center" src="~/assets/layouts/layout4/img/avatar.png" />
+                                <i class="fa fa-angle-down"></i>
+                            </a>
+                            <ul class="dropdown-menu dropdown-menu-default">
+                                <li>
+                                    <a href="@Url.Action("Logout", "Login", new { area = "" })">
+                                        <i class="icon-key"></i> Log Out
+                                    </a>
+                                </li>
+                            </ul>
+                        </li>
+                        <!-- END USER LOGIN DROPDOWN -->
+                    </ul>
+                </div>
+                <!-- END TOP NAVIGATION MENU -->
+            </div>
+            <!-- END PAGE TOP -->
+        </div>
+        <!-- END HEADER INNER -->
+    </div>
+    <!-- END HEADER -->
+    <!-- BEGIN HEADER & CONTENT DIVIDER -->
+    <div class="clearfix"> </div>
+    <!-- END HEADER & CONTENT DIVIDER -->
+    <!-- BEGIN CONTAINER -->
+    <div class="page-container">
+        <!-- BEGIN SIDEBAR FROM PARTIAL-->
+        @await Html.PartialAsync("_SideBar")
+        <!-- END SIDEBAR FROM PARTIAL -->
+        <!-- BEGIN CONTENT -->
+        <div class="page-content-wrapper">
+            <!-- BEGIN CONTENT BODY -->
+            <div class="page-content" style="min-height:1084px">
+                <div class="page-head">
+                    <!-- BEGIN PAGE TITLE -->
+                    <div class="page-title">
+                        <h1>
+                            @RenderSection("page_title", required: true)
+                        </h1>
+                    </div>
+                    <div class="page-toolbar">
+                        @if (!string.IsNullOrEmpty(@AppHttpContext.Current.Session.GetString("company_name")))
+                        {
+                        <h4 class="bold"> @AppHttpContext.Current.Session.GetString("company_name") </h4>
+                        }
+                    </div>
+                </div>
+                <!-- END PAGE TITLE -->
+                <!-- BEGIN PAGE BREADCRUMB -->
+                @Html.Raw(TempData["breadcrumb"].ToString())
+                <!-- END PAGE HEADER-->
+                @RenderBody()
+            </div>
+            <!-- END CONTENT BODY -->
+        </div>
+        <!-- END CONTENT -->
+    </div>
+    <!-- END CONTAINER -->
+    <!-- BEGIN FOOTER -->
+    <div class="page-footer">
+        <div class="page-footer-inner">
+            @DateTime.Now.Year &copy; Test_FathinMuhammadFadhlullah
+        </div>
+        <div class="scroll-to-top">
+            <i class="icon-arrow-up"></i>
+        </div>
+    </div>
+    <!-- END FOOTER -->
+    <!--[if lt IE 9]>
+    <script src="/assets/global/plugins/respond.min.js"></script>
+    <script src="/assets/global/plugins/excanvas.min.js"></script>
+    <![endif]-->
+    <!-- BEGIN CORE PLUGINS -->
+    <script src="~/assets/global/plugins/bootstrap/js/bootstrap.min.js" type="text/javascript"></script>
+    <script src="~/assets/global/plugins/js.cookie.min.js" type="text/javascript"></script>
+    <script src="~/assets/global/plugins/bootstrap-hover-dropdown/bootstrap-hover-dropdown.min.js" type="text/javascript"></script>
+    <script src="~/assets/global/plugins/jquery.blockui.min.js" type="text/javascript"></script>
+    <script src="~/assets/global/plugins/uniform/jquery.uniform.min.js" type="text/javascript"></script>
+    <script src="~/assets/global/plugins/bootstrap-switch/js/bootstrap-switch.min.js" type="text/javascript"></script>
+    <!-- END CORE PLUGINS -->
+    <!-- BEGIN PAGE LEVEL PLUGINS -->
+    <script src="~/assets/global/plugins/bootstrap-datepicker/js/bootstrap-datepicker.min.js" type="text/javascript"></script>
+    <script src="~/assets/global/plugins/moment.min.js" type="text/javascript"></script>
+    <script src="~/assets/global/plugins/bootstrap-daterangepicker/daterangepicker.min.js" type="text/javascript"></script>
+    <!-- END PAGE LEVEL PLUGINS -->
+    <!-- BEGIN THEME GLOBAL SCRIPTS -->
+    <script src="~/assets/global/scripts/app.js" type="text/javascript"></script>
+    <script src="~/assets/modules/js/SaveFrm.js" type="text/javascript"></script>
+    <!-- END THEME GLOBAL SCRIPTS -->
+    <!-- BEGIN PAGE LEVEL SCRIPTS -->
+    <script src="~/assets/pages/scripts/components-date-time-pickers-default.js" type="text/javascript"></script>
+    @foreach (String script in (List<String>)TempData["scripts_controller"])
+    {
+        <script src="~/@(Html.Raw(Url.Content(script)))" type="text/javascript"></script>
+    }
+    <!-- END PAGE LEVEL SCRIPTS -->
+    <!-- BEGIN THEME LAYOUT SCRIPTS -->
+    <script src="~/assets/layouts/layout4/scripts/layout.min.js" type="text/javascript"></script>
+    <script src="~/assets/layouts/layout4/scripts/demo.min.js" type="text/javascript"></script>
+    <script src="~/assets/layouts/global/scripts/quick-sidebar.min.js" type="text/javascript"></script>
+    <!-- END THEME LAYOUT SCRIPTS -->
+
+</body>
+</html>

@@ -1,0 +1,90 @@
+﻿@model Test_FathinMuhammadFadhlullah.Entities.Menu
+@{
+    ViewBag.Title = "MenuForm";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+
+@section page_title{
+    Menu Form}
+
+@section css{
+    <!-- BEGIN VIEW LEVEL CSS -->
+    <!-- END VIEW LEVEL CSS -->
+}
+
+
+@section Scripts{
+    <!-- BEGIN VIEW LEVEL SCRIPTS -->
+    <!-- END VIEW LEVEL SCRIPTS -->
+}
+
+<div class="page-title"></div>
+<div class="row">
+    <div class="col-md-12">
+        @await Html.PartialAsync("_StatusMessage")
+        @using (Html.BeginForm((Model.menu_id <= 0) ? "Add" : "Edit", "Menu", FormMethod.Post, new { @class = "form-horizontal" }))
+        {
+            @Html.AntiForgeryToken()
+            <div class="portlet light bordered">
+                <div class="portlet-title">
+                    <div class="caption"><i class="fa fa-cogs"></i> Menu</div>
+                </div>
+                <div class="portlet-body form">
+                    <div class="form-body">
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label class="col-md-4 control-label">Menu Name (*)</label>
+                                    <div class="col-md-8">
+                                        @Html.TextBoxFor(model => Model.menu_name,
+Model.menu_id <= 0 ? (object)new { id = "menu_name", maxlength = 100, @class = "form-control input-medium", placeholder = "Menu Name", @required = true } : (object)new { id = "menu_name", @class = "form-control input-medium", placeholder = "Menu Name", @required = true, @readonly = true })
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label class="col-md-4 control-label">Title (*)</label>
+                                    <div class="col-md-8">
+                                        @Html.TextBoxFor(model => Model.menu_title, new { id = "menu_title", maxlength = 100, @class = "form-control input-large", placeholder = "Title", @required = true })
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label class="col-md-4 control-label">Parent</label>
+                                    <div class="col-md-8">
+                                        @Html.DropDownListFor(model => Model.pid, new SelectList(ViewBag.listParent, "menu_id", "menu_title", Model.pid), "", new { id = "parent_id", @class = "form-control input-large", @data_placeholder = "Parent Menu" })
+                                    </div>
+                                </div>
+                                <div class="form-group form-inline">
+                                    <label class="col-md-4 control-label">URL (*)</label>
+                                    <div class="col-md-8">
+                                        @Html.TextBoxFor(model => Model.menu_url, new { id = "menu_url", maxlength = 254, @class = "form-control input-medium", placeholder = "URL", @required = true })
+                                    </div>
+                                </div>
+                                <div class="form-group form-inline">
+                                    <label class="col-md-4 control-label">Icon</label>
+                                    <div class="col-md-8">
+                                        @Html.TextBoxFor(model => Model.menu_icon, new { id = "menu_icon", maxlength = 100, @class = "form-control input-medium", placeholder = "Icon" })
+                                    </div>
+                                </div>
+                                <div class="form-group form-inline">
+                                    <label class="col-md-4 control-label">Position</label>
+                                    <div class="col-md-8">
+                                        @Html.TextBoxFor(model => Model.menu_position, new { id = "menu_position", @class = "form-control input-xsmall", @type = "number", placeholder = "Position" })
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="form-actions">
+                    <div class="row">
+                        <div class="col-md-6">
+                            @Html.Hidden("menu_id", Model.menu_id)
+                            <button class="btn btn-primary" id="saveFrm" type="submit" onclick="return confirm('are you sure ?')"><i class="fa fa-check icon-white"></i> Save</button>
+                            <a class="btn default" href="@Url.Action("Index", "menu")"><i class="fa fa-reply icon-white"></i> Back</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        }
+    </div>
+</div>

@@ -1,0 +1,155 @@
+﻿@model List<Test_FathinMuhammadFadhlullah.Entities.Buku>
+@using Test_FathinMuhammadFadhlullah.Utils;
+
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+@section page_title{
+    Data Buku}
+
+@section css{
+    <!-- BEGIN VIEW LEVEL CSS -->
+    <!-- END VIEW LEVEL CSS -->
+}
+
+
+@section Scripts{
+    <!-- BEGIN VIEW LEVEL SCRIPTS -->
+    <script>
+        $(document).on('ready', function () {
+            $(".reset").click(function () {
+                $("input[type=text]:not('#start_date'):not('#end_date'), textarea").val("");
+                $("#supplier_code").select2("val", "");
+                $("#doc_status").select2("val", "");
+            });
+
+            if ($("#chkboxDate").is(':checked')) {
+                $("#chkboxDateString").val("Y");
+            }
+            else {
+                $("#chkboxDateString").val("N");
+            }
+
+            $("#chkboxDate").on("change", function () {
+                if ($("#chkboxDate").is(':checked')) {
+                    $("#chkboxDateString").val("Y");
+                }
+                else {
+                    $("#chkboxDateString").val("N");
+                }
+            });
+        });
+    </script>
+    <!-- END VIEW LEVEL SCRIPTS -->
+}
+
+<div class="page-title"></div>
+<div class="row">
+    <div class="col-md-12">
+        @await Html.PartialAsync("_StatusMessage")
+        <!-- start filter -->
+        <div class="portlet light bordered">
+            <div class="portlet-title">
+                <div class="caption">
+                    <i class="fa fa-filter font-green"></i>
+                    <span class="caption-subject font-green bold uppercase"> Filter Buku</span>
+                </div>
+                <div class="tools"></div>
+            </div>
+            <div class="portlet-body form">
+                @using (Html.BeginForm("Index", "Buku", FormMethod.Post, new { @class = "form-horizontal" }))
+                {
+                    @Html.AntiForgeryToken()
+                    <div class="form-body">
+                        <div class="form-horizontal">
+                            <div class="row">
+                                <div class="col-md-7">
+                                    <div class="form-group form-inline">
+                                        <label class="col-md-3 control-label">Tanggal Terbit</label>
+                                        <div class="col-md-8">
+                                            <input type="text" class="form-control input-small date-picker" data-date-format="dd-mm-yyyy" id="start_date" name="start_date" value="@(ViewBag.start_date ?? DateTime.Now.ToString("dd-MM-yyyy"))"> -
+                                            <input type="text" class="form-control input-small date-picker" data-date-format="dd-mm-yyyy" id="end_date" name="end_date" value="@(ViewBag.end_date ?? DateTime.Now.ToString("dd-MM-yyyy"))">
+                                            <input class="group-checkable" style="padding:0!important" type="checkbox" id="chkboxDate" value="Y" @(ViewBag.chkboxDate == "N" ? "" : "checked='checked'") name="chkboxDate" />
+                                            <input type="hidden" class="form-control input-medium" id="chkboxDateString" name="chkboxDateString" value="@(ViewBag.chkboxDate ?? String.Empty)">
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <label class="col-md-3 control-label">Judul</label>
+                                        <div class="col-md-8">
+                                            <input type="text" class="form-control input-medium" id="judul" name="judul" value="@(ViewBag.judul ?? String.Empty)">
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-md-5">
+                                    <div class="form-group">
+                                        <label class="col-md-2 control-label">Penerbit</label>
+                                        <div class="col-md-8">
+                                            @Html.DropDownList("penerbit_id", new SelectList(ViewBag.listPenerbit, "penerbit_id", "nama", ViewBag.listPenerbit), "", new { id = "penerbit_id", name = "penerbit_id", @class = "form-control input-large select2", @data_tags = "true", @data_placeholder = "Pilih Penerbit", @data_allow_clear = "true" })
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <label class="col-md-2 control-label"></label>
+                                        <div class="col-md-8">
+                                            @*<button class="btn btn-primary" id="submitBuku" name="submit" value="findDoc"><i class="fa fa-search"></i> Search</button> &nbsp; &nbsp;*@
+                                            <button class="btn btn-primary" id="submit" name="submit" value="findDoc" style="padding-right:20px;"><i class="fa fa-search"></i> Search</button> &nbsp; &nbsp;
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                }
+            </div>
+            <!-- end of filter -->
+            <div class="portlet light ">
+                <div class="portlet-title">
+                    <div class="caption font-dark">
+                        <i class="icon-settings font-dark"></i>
+                        <span class="caption-subject bold uppercase"> Buku</span>
+                    </div>
+                    <div class="actions">
+                        <div class="btn-group btn-group-devided">
+                            <a href="@Url.Action("Add","Buku")" class="btn btn-circle btn-sm sbold red">
+                                <i class="fa fa-plus"> </i>Add New
+                            </a>
+                        </div>
+                    </div>
+                </div>
+                <div class="portlet-body">
+                    <table class="table table-striped table-bordered table-hover" id="dtTables">
+                        <thead>
+                            <tr role="row">
+                                <th>No.</th>
+                                <th>Judul</th>
+                                <th>Penerbit</th>
+                                <th>Tanggal Terbit</th>
+                                <th>Action</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @{
+                                AES aes = new AES();
+
+                                for (int i = 0; i < Model.Count; i++)
+                                {
+                                    <tr>
+                                        <td>@(i + 1)</td>
+                                        <td>@Model[i].judul</td>
+                                        <td>@Model[i].nama</td>
+                                        <td>@Model[i].tanggal_terbit.ToString("yyyy-MM-dd")</td>
+                                        <td>
+                                            <a href="@Url.Action("Edit","Buku", new { code = aes.Encrypt("BKU", Model[i].buku_id.ToString()) })" class="icon huge" title="Details Setting"><i class="fa fa-pencil"></i></a>&nbsp;
+                                            <a href="@Url.Action("Delete","Buku", new { code = aes.Encrypt("BKU", Model[i].buku_id.ToString()) })" class="icon huge" title="Delete Setting" onclick="return confirm('are you sure ?')"><i class="fa fa-trash-o"></i></a>
+                                        </td>
+                                    </tr>
+                                }
+                            }
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+            <!-- END EXAMPLE TABLE PORTLET-->
+        </div>
+    </div>

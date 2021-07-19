@@ -1,0 +1,25 @@
+﻿@if (TempData["Error"] != null)
+{
+    <div class="alert alert-block alert-inline-top alert-dismissable alert-danger">
+        <button data-dismiss="alert" class="close" type="button"><i class="ace-icon fa fa-times"></i></button>
+        @TempData["Message"]
+        @{
+            if (TempData["messages"] != null)
+            {
+                var errors = TempData["messages"] as FileHelpers.ErrorInfo[];
+                foreach (var errorMessage in errors)
+                {
+                    var linenumber = @errorMessage.LineNumber - 1;
+                    <p>Error at Line @errorMessage.LineNumber : @errorMessage.ExceptionInfo.Message</p>
+                }
+            }
+        }
+    </div>
+}
+else if (TempData["Success"] != null)
+{
+    <div class="alert alert-block alert-inline-top alert-dismissable alert-success">
+        <button data-dismiss="alert" class="close" type="button"><i class="ace-icon fa fa-times"></i></button>
+        @TempData["Message"]
+    </div>
+}

@@ -1,0 +1,71 @@
+﻿@model List<Test_FathinMuhammadFadhlullah.Entities.UserGroup>
+
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+@section page_title{
+    User Group}
+
+@section css{
+    <!-- BEGIN VIEW LEVEL CSS -->
+    <!-- END VIEW LEVEL CSS -->
+}
+
+
+@section Scripts{
+    <!-- BEGIN VIEW LEVEL SCRIPTS -->
+    <!-- END VIEW LEVEL SCRIPTS -->
+}
+
+<div class="page-title"></div>
+<div class="row">
+    <div class="col-md-12">
+        @Html.Partial("_StatusMessage")
+        <div class="portlet light ">
+            <div class="portlet-title">
+                <div class="caption font-dark">
+                    <i class="icon-settings font-dark"></i>
+                    <span class="caption-subject bold uppercase"> User Group</span>
+                </div>
+                <div class="actions">
+                    <div class="btn-group btn-group-devided">
+                        <a href="@Url.Action("Add","UserGroup")" class="btn btn-sm sbold grey">
+                            <i class="fa fa-plus"> </i>Add New
+                        </a>
+                    </div>
+                </div>
+            </div>
+            <div class="portlet-body">
+                <table class="table table-striped table-bordered table-hover" id="datatables">
+                    <thead>
+                        <tr role="row">
+                            <th>No.</th>
+                            <th>Usergroup</th>
+                            @*<th>Approval</th>*@
+                            <th>Action</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @{
+                            for (int i = 0; i < Model.Count; i++)
+                            {
+                                <tr>
+                                    <td>@(i + 1)</td>
+                                    <td>@Model[i].usergroup_name</td>
+                                    @*<td align="center">@Html.Raw(Test_FathinMuhammadFadhlullah.Utils.Helper.Html.getLabelApproval(Model[i].ApprovalStatus))</td>*@
+                                    <td>
+                                        <a href="@Url.Action("Edit","UserGroup", new { code = Model[i].usergroup_id })" class="icon huge" title="Details UserGroup"><i class="fa fa-pencil"></i></a>&nbsp;
+                                        <a href="@Url.Action("Permission","UserGroup", new { code = Model[i].usergroup_id })" class="icon huge" title="UserGroup Permission"><i class="fa fa-gear"></i></a>
+                                        @*<a href="@Url.Action("Delete","UserGroup", new { code = Model[i].usergroup_id })" class="icon huge" title="Delete UserGroup" onclick="return confirm('are you sure ?')"><i class="fa fa-trash-o"></i></a>*@
+                                    </td>
+                                </tr>
+                            }
+                        }
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
